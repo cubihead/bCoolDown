@@ -42,7 +42,7 @@ public class bWarmUpManager {
         {
             if(player.isOnline()) {
                 bCoolDownManager.setWarmUpOK(player, pre, message);
-                bWarmUpManager.playercommands.remove(this.player.getName());
+                bWarmUpManager.playercommands.remove(this.player.getName() + pre);
                 player.chat(pre + message);
             }            
         }
