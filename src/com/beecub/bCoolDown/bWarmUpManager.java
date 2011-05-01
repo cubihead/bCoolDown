@@ -11,12 +11,17 @@ public class bWarmUpManager {
     public static void startWarmUp(bCoolDown bCoolDown, Player player, String pre, String message, int warmUpSeconds) {
         if(!isWarmUpProcess(player, pre, message)) {
             bCoolDownManager.removeWarmUpOK(player, pre, message);
-            bChat.sendMessageToPlayer(player, "&6Wait &e" + warmUpSeconds + " seconds&6 before command &e" + pre + "&6 has warmed up.&f");
+            String msg = bConfigManager.getWarmUpMessage();
+            msg = msg.replaceAll("&command&", pre);
+            msg = msg.replaceAll("&seconds&", Long.toString(warmUpSeconds));
+            bChat.sendMessageToPlayer(player, msg);
             int taskIndex = bCoolDown.getServer().getScheduler().scheduleSyncDelayedTask(bCoolDown, new WarmTask(player, pre, message), warmUpSeconds * 20);
             playercommands.put(player.getName() + pre, Integer.valueOf(taskIndex));
         }
         else {
-            bChat.sendMessageToPlayer(player, "&6Warm-Up process for&e" + pre + "&6 has already started.&f");
+            String msg = bConfigManager.getWarmUpAlreadyStartedMessage();
+            msg = msg.replaceAll("&command&", pre);
+            bChat.sendMessageToPlayer(player, msg);
         }
     }
     
@@ -44,7 +49,7 @@ public class bWarmUpManager {
                 bCoolDownManager.setWarmUpOK(player, pre, message);
                 bWarmUpManager.playercommands.remove(this.player.getName() + pre);
                 player.chat(pre + message);
-            }            
+            }
         }
     }
 }

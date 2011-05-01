@@ -108,7 +108,10 @@ public class bCoolDownManager {
                     return false;
                 }
                 else {
-                    bChat.sendMessageToPlayer(player, "&6Wait &e" + waitSeconds + " seconds&6 before you can use command &e" + pre + "&6 again.&f");
+                    String msg = bConfigManager.getCoolDownMessage();
+                    msg = msg.replaceAll("&command&", pre);
+                    msg = msg.replaceAll("&seconds&", Long.toString(waitSeconds));
+                    bChat.sendMessageToPlayer(player, msg);
                     return true;
                 }
             }
@@ -134,7 +137,10 @@ public class bCoolDownManager {
                     return true;
                 }
                 else {
-                    bChat.sendMessageToPlayer(player, "&6Wait &e" + waitSeconds + " seconds&6 before you can use command &e" + pre + "&6 again.&f");
+                    String msg = bConfigManager.getCoolDownMessage();
+                    msg = msg.replaceAll("&command&", pre);
+                    msg = msg.replaceAll("&seconds&", Long.toString(waitSeconds));
+                    bChat.sendMessageToPlayer(player, msg);
                     return false;
                 }
             }

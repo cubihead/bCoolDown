@@ -34,6 +34,9 @@ public class bConfigManager {
             conf.setProperty("commands.cooldown./home", 30);
             conf.setProperty("commands.warmup./give", 60);
             conf.setProperty("commands.warmup./home", 20);
+            conf.setProperty("commands.options.message_cooldown", "&6Wait&e &seconds& seconds&6 before you can use command&e &command& &6again.&f");
+            conf.setProperty("commands.options.message_warmup", "&6Wait&e &seconds& seconds&6 before command&e &command& &6has warmed up.&f");
+            conf.setProperty("commands.options.message_warmup_alreadystarted", "&6Warm-Up process for&e &command& &6has already started.&f");
             conf.save();
         }        
     }
@@ -57,4 +60,14 @@ public class bConfigManager {
 	    warmUp = conf.getInt("commands.warmup." + pre, warmUp);
 	    return warmUp;
 	}
+	
+	static String getCoolDownMessage() {
+	    return conf.getString("commands.options.message_cooldown", "&6Wait&e &seconds& seconds&6 before you can use command&e &command& &6again.&f");
+	}
+	static String getWarmUpMessage() {
+        return conf.getString("commands.options.message_warmup", "&6Wait&e &seconds& seconds&6 before command&e &command& &6has warmed up.&f");
+    }
+	static String getWarmUpAlreadyStartedMessage() {
+        return conf.getString("commands.options.message_warmup_alreadystarted", "&6Warm-Up process for&e &command& &6has already started.&f");
+    }
 }
