@@ -3,10 +3,15 @@ package com.beecub.bCoolDown;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
+
+import com.beecub.bCoolDown.bCoolDown;
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
 
 import java.util.logging.Logger;
 
@@ -17,6 +22,8 @@ public class bCoolDown extends JavaPlugin {
 	public static PluginDescriptionFile pdfFile;
 	public static Configuration conf;
 	public static Configuration confusers;
+	public static PermissionHandler Permissions;
+    public static boolean permissions = false;
 
 	@SuppressWarnings("static-access")
 	public void onEnable() {
@@ -36,6 +43,9 @@ public class bCoolDown extends JavaPlugin {
 		bCoolDownManager.clear();
         confusers = bCoolDownManager.confusers;
         
+        if(setupPermissions()){
+        }
+        
 	}
 	
 	public void onDisable() {
@@ -52,4 +62,24 @@ public class bCoolDown extends JavaPlugin {
         }
         return false;
 	}
+	
+	// setup permissions
+    private boolean setupPermissions() {
+        Plugin plugin = this.getServer().getPluginManager().getPlugin("Permissions");
+        if (bCoolDown.Permissions == null) {
+            if (plugin != null) {
+                bCoolDown.Permissions = ((Permissions)plugin).getHandler();
+                log.info("[bCoolDown] Permission system found");
+                permissions = true;
+                return true;
+            }
+            else {
+                //log.info("[bCoolDown] Permission system not detected, plugin disabled");
+                //this.getServer().getPluginManager().disablePlugin(this);
+                permissions = false;
+                return false;
+            }
+        }
+        return false;
+    }
 }

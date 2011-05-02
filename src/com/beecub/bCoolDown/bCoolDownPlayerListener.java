@@ -18,37 +18,51 @@ public class bCoolDownPlayerListener extends PlayerListener {
         }
         String message = event.getMessage();
         Player player = event.getPlayer();
+        boolean on = true;
         
-        String pre;
-        int i = message.indexOf(' ');
-        if(i < 0) { i = message.length(); }
+        if(player.isOp()) {
+            on = false;
+        }
+        if(bCoolDown.permissions){ 
+            if(com.beecub.bCoolDown.bCoolDown.Permissions.permission(player, "bCoolDown.exception") || player.isOp()) {
+                on = false;
+            } else {
+                on = true;
+            }
+        }
         
-        pre = (String) message.subSequence(0, i);
-        message = (String) message.subSequence(i, message.length());
-        
-        int warmUpSeconds = bConfigManager.getWarmUp(player, pre);
-        if(warmUpSeconds > 0) {
-            if(!bCoolDownManager.checkWarmUpOK(player, pre, message)) {
-                if(bCoolDownManager.checkCoolDownOK(player, pre, message)) {
-                    bWarmUpManager.startWarmUp(this.plugin, player, pre, message, warmUpSeconds);
-                    event.setCancelled(true);
+        if(on) {
+            String pre;
+            int i = message.indexOf(' ');
+            if(i < 0) { i = message.length(); }
+            
+            pre = (String) message.subSequence(0, i);
+            message = (String) message.subSequence(i, message.length());
+            
+            int warmUpSeconds = bConfigManager.getWarmUp(player, pre);
+            if(warmUpSeconds > 0) {
+                if(!bCoolDownManager.checkWarmUpOK(player, pre, message)) {
+                    if(bCoolDownManager.checkCoolDownOK(player, pre, message)) {
+                        bWarmUpManager.startWarmUp(this.plugin, player, pre, message, warmUpSeconds);
+                        event.setCancelled(true);
+                    }
+                    else {
+                        event.setCancelled(true);
+                    }
                 }
                 else {
-                    event.setCancelled(true);
+                    if(bCoolDownManager.coolDown(player, pre, message)) {
+                        event.setCancelled(true);                    
+                    }
+                    else {
+                        bCoolDownManager.removeWarmUpOK(player, pre, message);
+                    }
                 }
             }
             else {
                 if(bCoolDownManager.coolDown(player, pre, message)) {
                     event.setCancelled(true);                    
                 }
-                else {
-                    bCoolDownManager.removeWarmUpOK(player, pre, message);
-                }
-            }
-        }
-        else {
-            if(bCoolDownManager.coolDown(player, pre, message)) {
-                event.setCancelled(true);                    
             }
         }
 	}
