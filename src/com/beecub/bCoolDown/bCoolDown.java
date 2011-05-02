@@ -3,13 +3,10 @@ package com.beecub.bCoolDown;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
-
-import com.beecub.bShortcut.bShortcut;
 
 import java.util.logging.Logger;
 
@@ -20,7 +17,6 @@ public class bCoolDown extends JavaPlugin {
 	public static PluginDescriptionFile pdfFile;
 	public static Configuration conf;
 	public static Configuration confusers;
-	private static bShortcut bShortcut;
 
 	@SuppressWarnings("static-access")
 	public void onEnable() {
@@ -40,7 +36,6 @@ public class bCoolDown extends JavaPlugin {
 		bCoolDownManager.clear();
         confusers = bCoolDownManager.confusers;
         
-        setupDefaultShortcuts();
 	}
 	
 	public void onDisable() {
@@ -56,24 +51,5 @@ public class bCoolDown extends JavaPlugin {
             return true;
         }
         return false;
-	}
-	
-	private void setupDefaultShortcuts() {
-	    Plugin test = this.getServer().getPluginManager().getPlugin("bShortcut");
-	    log.info("into");
-	    if (bShortcut == null) {
-            if (test != null) {
-                bShortcut = (bShortcut) test;
-                log.info(bShortcut.setupDefaultShortcut("/[YourCommandName]", "/[ShortCut]", "/[AlternativeShortcut]"));
-            }
-	    }
-//	    Plugin test = this.getServer().getPluginManager().getPlugin("bShortcut");
-//	    bShortcut = (bShortcut) test;
-//	    log.info("into");
-//        if (bShortcut == null) {
-//            log.info(bShortcut.setupDefaultShortcut("/[YourCommandName]", "/[ShortCut]", "/[AlternativeShortcut]"));
-//            bShortcut.setupDefaultShortcut("/[YourCommandName2]", "/[ShortCut2]", "/[AlternativeShortcut2]");
-//            bShortcut.setupDefaultShortcut("/[YourCommandName3]", "/[ShortCut2]", "/[AlternativeShortcut3]");
-//        }
 	}
 }
