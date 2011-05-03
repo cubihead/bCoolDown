@@ -51,12 +51,14 @@ public class bConfigManager {
 	
 	static int getCoolDown(Player player, String pre) {
 	    int coolDown = 0;
+	    pre = pre.toLowerCase();
 	    coolDown = conf.getInt("commands.cooldown." + pre, coolDown);
 	    return coolDown;
 	}
 	
 	static int getWarmUp(Player player, String pre) {
 	    int warmUp = 0;
+	    pre = pre.toLowerCase();
 	    warmUp = conf.getInt("commands.warmup." + pre, warmUp);
 	    return warmUp;
 	}
