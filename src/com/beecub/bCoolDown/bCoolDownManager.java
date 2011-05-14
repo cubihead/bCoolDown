@@ -12,6 +12,8 @@ import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 
+import util.bChat;
+
 
 public class bCoolDownManager {
 
@@ -64,7 +66,9 @@ public class bCoolDownManager {
         while(i < players.size()) {
             // clear cooldown
             cooldown.clear();
-            cooldown.addAll(confusers.getKeys("users." + players.get(i) + ".cooldown"));
+            if(confusers.getKeys("users." + players.get(i) + ".cooldown") != null) {
+                cooldown.addAll(confusers.getKeys("users." + players.get(i) + ".cooldown"));
+            }
             int j = 0;
             while(j < cooldown.size()) {
                 confusers.removeProperty("users." + players.get(i) + ".cooldown." + cooldown.get(j));
@@ -73,7 +77,9 @@ public class bCoolDownManager {
             confusers.removeProperty("users." + players.get(i) + ".cooldown");
             // clear warmup
             warmup.clear();
-            warmup.addAll(confusers.getKeys("users." + players.get(i) + ".warmup"));
+            if(confusers.getKeys("users." + players.get(i) + ".warmup") != null) {
+                warmup.addAll(confusers.getKeys("users." + players.get(i) + ".warmup")); 
+            }
             int k = 0;
             while(k < warmup.size()) {
                 confusers.removeProperty("users." + players.get(i) + ".warmup." + warmup.get(k));
