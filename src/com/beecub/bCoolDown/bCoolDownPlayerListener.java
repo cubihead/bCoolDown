@@ -3,6 +3,8 @@ package com.beecub.bCoolDown;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.player.PlayerMoveEvent;
+//import org.bukkit.event.entity.EntityDamageEvent;
 
 
 public class bCoolDownPlayerListener extends PlayerListener {
@@ -65,5 +67,12 @@ public class bCoolDownPlayerListener extends PlayerListener {
                 }
             }
         }
+	}
+	
+	public void onPlayerCommandMove(PlayerMoveEvent event) {
+	    Player player = event.getPlayer();
+	    bWarmUpManager.cancelWarmUps(player);
+	    bCoolDownManager.cancelCoolDowns(player);
+	    
 	}
 }

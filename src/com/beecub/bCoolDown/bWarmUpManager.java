@@ -40,6 +40,10 @@ public class bWarmUpManager {
     public static void removeWarmUpProcess(String tag) {
         bWarmUpManager.playercommands.remove(tag);
     }
+    
+    public static void cancelWarmUps(Player player) {
+        removeWarmUpProcess(player.getName());
+    }
 }
 
 

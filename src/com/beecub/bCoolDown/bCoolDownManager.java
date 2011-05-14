@@ -119,6 +119,18 @@ public class bCoolDownManager {
         return false;
     }
     
+    static void cancelCoolDowns(Player player) {
+        List<String> cooldown = new LinkedList<String>();
+        cooldown.clear();
+        cooldown.addAll(confusers.getKeys("users." + player.getName() + ".cooldown"));
+        int j = 0;
+        while(j < cooldown.size()) {
+            confusers.removeProperty("users." + player.getName() + ".cooldown." + cooldown.get(j));
+            j++;
+        }
+        confusers.removeProperty("users." + player.getName() + ".cooldown");
+    }
+    
     static boolean checkCoolDownOK(Player player, String pre, String message) {
         int coolDownSeconds = bConfigManager.getCoolDown(player, pre);
         if(coolDownSeconds > 0) {
@@ -217,4 +229,5 @@ public class bCoolDownManager {
         confusers.removeProperty("users." + player.getName() + ".warmup." + pre);
         confusers.save();
     }
+    
 }
